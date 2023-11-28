@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'Creating AWS Resources' 
+Resources:
+ MyVPC:
+  Type: AWS::EC2::VPC
+  Description: 'Attaching Ec2 security groups'
+  Properties:
+    CidrBlock: 10.0.0.0/16
+    EnableDnsSupport: false
+    EnableDnsHostnames: false
+    InstanceTenancy: default
+ MySubnet:
+  Type: AWS::EC2::Subnet
+  Properties:
+     CidrBlock: 10.0.1.0/24
+     VpcId:
+         !Ref MyVPC
+ MyInstance:
+  Type: AWS::EC2::Instance
+  Properties:
+      ImageId: ami-0230bd60aa48260c6
+ SecurityGroupIds:
+  Type: AWS::EC2::SecurityGroup
+  Properties:
+      GroupDescription: String
+      GroupName: String
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+ MyS3Bucket:
+  Type: AWS::S3::Bucket
+  Properties: 
+      AccessControl: Private
+      BucketName: james0934
+      
